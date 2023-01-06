@@ -1,62 +1,65 @@
-//history function to retrieve and display the user's input
+// HISTORY FUNCTIONS TO RETRIEVE AND DISPLAY THE USER'S INPUT
 function getHistory() {
     return document.getElementById("history-value").innerText;
 }
+
 function printHistory(num) {
     document.getElementById("history-value").innerText=num;
 }
 
-//output function to retrieve and display the user's result
+// OUTPUT FUNCTIONS TO RETRIEVE AND DISPLAY THE USER'S RESULTS
 function getOutput() {
-   return document.getElementById("output-value").innerText=num;
+    return document.getElementById("output-value").innerText;
 }
+
 function printOutput(num) {
-    if(num == ""){
+    if(num=="") {
         document.getElementById("output-value").innerText=num;
-    } else{
+    } else {
         document.getElementById("output-value").innerText=getFormattedNumber(num);
-    }
-    
-}
+    }         
+} 
+
 function getFormattedNumber(num) {
-    if(num == "-"){
+    if(num == "-") {
         return "";
     }
-    var n=Number(num);
-    var value= n.toLocaleString("en")
+    var n = Number(num);
+    var value = n.toLocaleString("en");
     return value;
 }
 
-//function to clear comas in output field
-function reversedNumberFormat(num){
+// FUNCTION TO CLEAR COMAS IN OUTPUT FIELD 
+function reverseNumberFormat(num) {
     return Number(num.replace(/,/g,''));
 }
+
 var operator = document.getElementsByClassName("operator");
-for(var i=0; i<operator.length;i++) {
+for(var i = 0; i < operator.length; i++) {
     operator[i].addEventListener("click", function() {
         if(this.id == "clear") {
             printHistory("");
             printOutput("");
         } else if(this.id == "backspace") {
-            var output = reversedNumberFormat(getOutput()).toString();
+            var output = reverseNumberFormat(getOutput()).toString();
             if(output) { // if output has a value
-                output = output.substring(0,output.length-1);
+                output = output.substr(0,output.length-1);
                 printOutput(output);
             }
         } else {
             var output = getOutput();
             var history = getHistory();
-            if(output == && history !="") {
+            if(output == "" && history != "") {
                 if(isNaN(history[history.length-1])) {
-                    history = history.substring(0, history.length-1);
+                    history = history.substr(0, history.length-1);
                 }
             }
-            if(output != ""|| history != "") {
+            if(output != "" || history != "") {
                 output = output == ""?
-                output:reversedNumberFormat(output);
+                output:reverseNumberFormat(output);
                 history = history+output;
                 if(this.id == "=") {
-                    var result= eval(history);
+                    var result = eval(history);
                     printOutput(result);
                     printHistory("");
                 } else {
@@ -72,10 +75,10 @@ for(var i=0; i<operator.length;i++) {
 var number = document.getElementsByClassName("number");
 for(var i = 0; i < number.length; i++) {
     number[i].addEventListener("click", function() {
-        var output = reversedNumberFormat(getOutput());
+        var output = reverseNumberFormat(getOutput());
         if(output != NaN) { // if output is a number
-          output = output + this.id;
-          printOutput(output);
+            output = output + this.id;
+            printOutput(output);
         }
     });
 }
